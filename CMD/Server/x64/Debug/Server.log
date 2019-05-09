@@ -1,7 +1,0 @@
-﻿  Main.cpp
-  Server.cpp
-C:\Users\kiril\Desktop\WinServices\CMD\Server\Server.cpp(101,8): warning C4101:  nCharsWritten: неиспользованная локальная переменная
-C:\Users\kiril\Desktop\WinServices\CMD\Server\Server.cpp(103,6): warning C4101:  iSendResult: неиспользованная локальная переменная
-  Создание кода...
-C:\Users\kiril\Desktop\WinServices\CMD\Server\Server.cpp(245,19): warning C4101:  ThreadId2: неиспользованная локальная переменная
-  Server.vcxproj -> C:\Users\kiril\Desktop\WinServices\CMD\x64\Debug\Server.exe

@@ -1,6 +1,4 @@
-#include "ConsoleHandler.h"
-
-
+#include "pch.h"
 #include "ConsoleHandler.h"
 
 
@@ -21,7 +19,7 @@ ConsoleHandler::ConsoleHandler() {
 	//SetConsoleMode(hStdin, 0);
 }
 
-Data ConsoleHandler::readConsole() {
+Package ConsoleHandler::readConsole() {
 	// Wait for the events. 
 	if (!ReadConsole(
 		hStdin,
@@ -47,7 +45,7 @@ Data ConsoleHandler::readConsole() {
 	return pack;
 }
 
-int ConsoleHandler::writeConsole(Data pack) {
+int ConsoleHandler::writeConsole(Package pack) {
 	// Write back to CMD 
 	if (!WriteConsole(
 		hStdout,

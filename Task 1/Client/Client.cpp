@@ -1,4 +1,6 @@
+#include "pch.h"
 #include "Client.h"
+#include "../Model/Package.h"
 
 #define WIN32_LEAN_AND_MEAN
 
@@ -15,7 +17,9 @@ Client::Client() {
 	recvbuflen = DEFAULT_BUFLEN;
 }
 
-int Client::client_initialize(const char *address) {
+int Client::client_initialize(const char *argv) {
+
+	// Validate the parameters
 
 
 	// Initialize Winsock
@@ -31,7 +35,7 @@ int Client::client_initialize(const char *address) {
 	hints.ai_protocol = IPPROTO_TCP;
 
 	// Resolve the server address and port
-	iResult = getaddrinfo(address, DEFAULT_PORT, &hints, &result);
+	iResult = getaddrinfo(argv, DEFAULT_PORT, &hints, &result);
 	if (iResult != 0) {
 		printf("getaddrinfo failed with error: %d\n", iResult);
 		WSACleanup();
@@ -71,9 +75,10 @@ int Client::client_connect() {
 	}
 	return 0;
 }
-int Client::client_data_send(Data& data) {
 
-	iResult = send(ConnectSocket, (const char*)&data, sizeof(Data), 0);
+int Client::client_data_send(Package& data) {
+
+	iResult = send(ConnectSocket, (const char*)&data, sizeof(Package), 0);
 	if (iResult == SOCKET_ERROR) {
 		printf("send failed with error: %d\n", WSAGetLastError());
 		closesocket(ConnectSocket);
@@ -92,10 +97,11 @@ int Client::client_data_send(Data& data) {
 
 	return 0;
 }
-Data& Client::client_recv() {
+
+Package& Client::client_recv() {
 	// Receive until the peer closes the connection
 
-	iResult = recv(ConnectSocket, (char *)&data, sizeof(Data), 0);
+	iResult = recv(ConnectSocket, (char *)&data, sizeof(Package), 0);
 	if (iResult > 0) {
 		//printf("Bytes received: %d\n", iResult);
 	}

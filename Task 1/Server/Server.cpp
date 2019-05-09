@@ -1,17 +1,34 @@
-#include "Server.h"
-#include <iostream>
+#undef UNICODE
 
-LPSTR cmdPath = LPSTR("C:\\Windows\\System32\\cmd.exe");
+#define WIN32_LEAN_AND_MEAN
+
+#include <windows.h>
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include "Server.h"
+
+// Need to link with Ws2_32.lib
+#pragma comment (lib, "Ws2_32.lib")
+// #pragma comment (lib, "Mswsock.lib")
+
+LPSTR cmdpath = LPSTR("C:\\Windows\\System32\\cmd.exe");
 
 HANDLE hChildProcess = NULL;
 HANDLE hStdIn = NULL; // Handle to parents std input.
 BOOL bRunThread = TRUE;
 
 
+
+/////////////////////////////////////////////////////////////////////// 
+// DisplayError
+// Displays the error number and corresponding message.
+///////////////////////////////////////////////////////////////////////
 void DisplayError(const char *pszAPI)
 {
 	LPVOID lpvMessageBuffer;
-	CHAR szPrintBuffer[DEFAULT_BUFLEN];
+	CHAR szPrintBuffer[512];
 	DWORD nCharsWritten;
 
 	FormatMessage(
@@ -31,6 +48,11 @@ void DisplayError(const char *pszAPI)
 }
 
 
+
+/////////////////////////////////////////////////////////////////////// 
+// PrepAndLaunchRedirectedChild
+// Sets up STARTUPINFO structure, and launches redirected child.
+/////////////////////////////////////////////////////////////////////// 
 void PrepAndLaunchRedirectedChild(HANDLE hChildStdOut, HANDLE hChildStdIn, HANDLE hChildStdErr)
 {
 	PROCESS_INFORMATION pi;
@@ -44,8 +66,17 @@ void PrepAndLaunchRedirectedChild(HANDLE hChildStdOut, HANDLE hChildStdIn, HANDL
 	si.hStdInput = hChildStdIn;
 	si.hStdError = hChildStdErr;
 	si.wShowWindow = SW_HIDE;
-	
-	if (!CreateProcess(NULL, cmdPath, NULL, NULL, TRUE,
+	// Use this if you want to hide the child:
+	//     si.wShowWindow = SW_HIDE;
+	// Note that dwFlags must include STARTF_USESHOWWINDOW if you want to
+	// use the wShowWindow flags.
+
+
+	// Launch the process that you want to redirect (in this case,
+	// Child.exe). Make sure Child.exe is in the same directory as
+	// redirect.c launch redirect from a command line to prevent location
+	// confusion.
+	if (!CreateProcess(NULL, cmdpath, NULL, NULL, TRUE,
 		CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi))
 		DisplayError("CreateProcess");
 
@@ -59,6 +90,10 @@ void PrepAndLaunchRedirectedChild(HANDLE hChildStdOut, HANDLE hChildStdIn, HANDL
 }
 
 
+/////////////////////////////////////////////////////////////////////// 
+// ReadAndHandleOutput
+// Monitors handle for input. Exits when child exits or pipe breaks.
+/////////////////////////////////////////////////////////////////////// 
 DWORD WINAPI ReadAndHandleOutput(LPVOID lpvThreadParam)
 {
 	CHAR lpBuffer[DEFAULT_BUFLEN];
@@ -88,7 +123,12 @@ DWORD WINAPI ReadAndHandleOutput(LPVOID lpvThreadParam)
 	return 1;
 }
 
-
+/////////////////////////////////////////////////////////////////////// 
+// GetAndSendInputThread
+// Thread procedure that monitors the console for input and sends input
+// to the child process through the input pipe.
+// This thread ends when the child application exits.
+/////////////////////////////////////////////////////////////////////// 
 DWORD WINAPI GetAndSendInputThread(LPVOID lpvThreadParam)
 {
 	CHAR read_buff[DEFAULT_BUFLEN];
@@ -145,7 +185,6 @@ int Server::set_up_socket() {
 		return 1;
 	}
 
-
 	// Create a SOCKET for connecting to server
 	ListenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
 	if (ListenSocket == INVALID_SOCKET) {
@@ -172,19 +211,18 @@ int Server::set_up_socket() {
 int Server::listen_socket() {
 	iResult = listen(ListenSocket, SOMAXCONN);
 	if (iResult == SOCKET_ERROR) {
-		printf("Listen failed with error: %d\n", WSAGetLastError());
+		printf("listen failed with error: %d\n", WSAGetLastError());
 		closesocket(ListenSocket);
 		WSACleanup();
 		return 1;
 	}
 	return 0;
 }
-
 int Server::accept_client_socket() {
 	// Accept a client socket
 	ClientSocket = accept(ListenSocket, NULL, NULL);
 	if (ClientSocket == INVALID_SOCKET) {
-		printf("Accept failed with error: %d\n", WSAGetLastError());
+		printf("accept failed with error: %d\n", WSAGetLastError());
 		closesocket(ListenSocket);
 		WSACleanup();
 		return 1;
@@ -194,12 +232,12 @@ int Server::accept_client_socket() {
 	closesocket(ListenSocket);
 	return 0;
 }
-
 int Server::recv_data() {
 	char* cmdargs = (char*)malloc(size_t(DEFAULT_BUFLEN));
 	ZeroMemory(cmdargs, DEFAULT_BUFLEN);
 
-	// Creating redirect cmd
+
+	// START OF CREATING REDIRECTED CMD
 	HANDLE hOutputReadTmp, hOutputRead, hOutputWrite;
 	HANDLE hInputWriteTmp, hInputRead, hInputWrite;
 	HANDLE hErrorWrite;
@@ -279,23 +317,23 @@ int Server::recv_data() {
 	hThread = CreateThread(NULL, 0, GetAndSendInputThread, (LPVOID)hInputWrite, 0, &ThreadId1);
 	if (hThread == NULL) DisplayError("CreateThread");
 
-
 	// Redirection is complete
 
-	// TODO: READ FROM CLIENT AND WRITE TO CMD
-	Data data, pack;
+	Package data, pack;
 	char lpBuffer[DEFAULT_BUFLEN];
 	DWORD nBytesWrote, nBytesRead;
 
 	while (true)
 	{
-		iResult = recv(ClientSocket, (char*)&data, sizeof(Data), 0);
+		iResult = recv(ClientSocket, (char*)&data, sizeof(Package), 0);
 		if (iResult > 0) {
 			
 			if (!WriteFile(hInputWrite, data.str, data.len, &nBytesWrote, NULL))
 			{
 				DisplayError("WriteFile");
 			}
+			
+			Sleep(100);
 
 			if (!ReadFile(hOutputRead, lpBuffer, sizeof(lpBuffer),
 				&nBytesRead, NULL) || !nBytesRead)
@@ -307,7 +345,7 @@ int Server::recv_data() {
 			pack.len = nBytesRead;
 
 			// Send CMD output back to client
-			iSendResult = send(ClientSocket, (char*)&pack, sizeof(Data), 0);
+			iSendResult = send(ClientSocket, (char*)&pack, sizeof(Package), 0);
 			if (iSendResult == SOCKET_ERROR) {
 				printf("send failed: %d\n", WSAGetLastError());
 				closesocket(ClientSocket);
@@ -351,7 +389,6 @@ int Server::recv_data() {
 
 	return 0;
 }
-
 int Server::close_connection() {
 	// cleanup
 	closesocket(ClientSocket);

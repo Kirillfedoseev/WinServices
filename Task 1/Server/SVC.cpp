@@ -1,7 +1,7 @@
 //#include "SVC.h"
 //#include "Server.h"
 //
-//
+//#pragma comment(lib, "advapi32.lib")
 //
 //SERVICE_STATUS          gSvcStatus;
 //SERVICE_STATUS_HANDLE   gSvcStatusHandle;
@@ -17,12 +17,12 @@
 //// Return value:
 ////   None
 ////
-//void __cdecl _ttmain(int argc, const char* argv[])
+//void __cdecl _ttmain(int argc, TCHAR *argv[])
 //{
 //	// If command-line parameter is "install", install the service. 
 //	// Otherwise, the service is probably being started by the SCM.
 //	if (argv != NULL) {
-//		if (strcmp(argv[1], "install") == 0)
+//		if (lstrcmpi(argv[1], TEXT("install")) == 0)
 //		{
 //			SvcInstall();
 //			return;
@@ -58,7 +58,7 @@
 //{
 //	SC_HANDLE schSCManager;
 //	SC_HANDLE schService;
-//	LPSTR szPath;
+//	TCHAR szPath[MAX_PATH];
 //
 //	if (!GetModuleFileName((HMODULE)"", szPath, MAX_PATH))
 //	{
@@ -121,7 +121,7 @@
 //// Return value:
 ////   None.
 ////
-//VOID WINAPI SvcMain(DWORD dwArgc, LPTSTR* lpszArgv)
+//VOID WINAPI SvcMain(DWORD dwArgc, LPTSTR *lpszArgv)
 //{
 //	// Register the handler function for the service
 //
@@ -162,7 +162,7 @@
 //// Return value:
 ////   None
 ////
-//VOID SvcInit(DWORD dwArgc, LPTSTR* lpszArgv)
+//VOID SvcInit(DWORD dwArgc, LPTSTR *lpszArgv)
 //{
 //	// TO_DO: Declare and set any required variables.
 //	//   Be sure to periodically call ReportSvcStatus() with 
@@ -195,8 +195,8 @@
 //	server.accept_client_socket();
 //	server.recv_data();
 //	server.close_connection();
-//
-//	while (true)
+//	
+//	while (1)
 //	{
 //		// Check whether to stop the service.
 //
@@ -280,3 +280,48 @@
 //	}
 //
 //}
+//
+////
+//// Purpose: 
+////   Logs messages to the event log
+////
+//// Parameters:
+////   szFunction - name of function that failed
+//// 
+//// Return value:
+////   None
+////
+//// Remarks:
+////   The service must have an entry in the Application event log.
+////
+///*
+//VOID SvcReportEvent(LPTSTR szFunction)
+//{
+//	HANDLE hEventSource;
+//	LPCTSTR lpszStrings[2];
+//	TCHAR Buffer[80];
+//
+//	hEventSource = RegisterEventSource(NULL, SVCNAME);
+//
+//	if (NULL != hEventSource)
+//	{
+//		StringCchPrintf(Buffer, 80, TEXT("%s failed with %d"), szFunction, GetLastError());
+//
+//		lpszStrings[0] = SVCNAME;
+//		lpszStrings[1] = Buffer;
+//
+//		ReportEvent(hEventSource,        // event log handle
+//			EVENTLOG_ERROR_TYPE, // event type
+//			0,                   // event category
+//			SVC_ERROR,           // event identifier
+//			NULL,                // no security identifier
+//			2,                   // size of lpszStrings array
+//			0,                   // no binary data
+//			lpszStrings,         // array of strings
+//			NULL);               // no binary data
+//
+//		DeregisterEventSource(hEventSource);
+//	}
+//
+//}
+//*/
