@@ -1,0 +1,11 @@
+﻿  pch.cpp
+  Client.cpp
+  ClientServerPipe.cpp
+  ConsoleHandler.cpp
+  Server.cpp
+C:\Users\kiril\Desktop\WinServices\Task 1\ClientServerPipe\Server.cpp(79,8): warning C4101:  nCharsWritten: неиспользованная локальная переменная
+C:\Users\kiril\Desktop\WinServices\Task 1\ClientServerPipe\Server.cpp(81,6): warning C4101:  iSendResult: неиспользованная локальная переменная
+  SVC.cpp
+  Создание кода...
+C:\Users\kiril\Desktop\WinServices\Task 1\ClientServerPipe\Server.cpp(219,19): warning C4101:  ThreadId2: неиспользованная локальная переменная
+  ClientServerPipe.vcxproj -> C:\Users\kiril\Desktop\WinServices\Task 1\x64\Debug\ClientServerPipe.exe

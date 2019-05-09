@@ -1,0 +1,11 @@
+﻿  MC: Compiling genctrs.mc
+  Writing C:\Users\kiril\Desktop\WinServices\PerfGen\MSG00001.bin
+      [4000076c .. 4000076c] - 136 bytes
+      [400007cf .. 400007cf] - 136 bytes
+      [c00007d0 .. c00007d2] - 636 bytes
+      Total of 5 messages, 948 bytes
+  PerfUtil.c
+  Perfgen.c
+  Создание кода...
+C:\Users\kiril\Desktop\WinServices\PerfGen\Perfgen.c(126,8): warning C4101:  dwInputValue: неиспользованная локальная переменная
+  PerfGen.vcxproj -> C:\Users\kiril\Desktop\WinServices\PerfGen\x64\Debug\PerfGen.dll

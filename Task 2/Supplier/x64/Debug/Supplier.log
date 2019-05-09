@@ -1,0 +1,11 @@
+﻿  pch.cpp
+  Supplier.cpp
+C:\Users\kiril\Desktop\WinServices\Task 2\Supplier\Supplier.cpp(47,11): warning C4101:  cchMaxValue: неиспользованная локальная переменная
+C:\Users\kiril\Desktop\WinServices\Task 2\Supplier\Supplier.cpp(46,11): warning C4101:  cValues: неиспользованная локальная переменная
+C:\Users\kiril\Desktop\WinServices\Task 2\Supplier\Supplier.cpp(45,11): warning C4101:  cchMaxClass: неиспользованная локальная переменная
+C:\Users\kiril\Desktop\WinServices\Task 2\Supplier\Supplier.cpp(48,11): warning C4101:  cbMaxValueData: неиспользованная локальная переменная
+C:\Users\kiril\Desktop\WinServices\Task 2\Supplier\Supplier.cpp(44,11): warning C4101:  cbMaxSubKey: неиспользованная локальная переменная
+C:\Users\kiril\Desktop\WinServices\Task 2\Supplier\Supplier.cpp(54,8): warning C4101:  achValue: неиспользованная локальная переменная
+C:\Users\kiril\Desktop\WinServices\Task 2\Supplier\Supplier.cpp(52,8): warning C4101:  i: неиспользованная локальная переменная
+C:\Users\kiril\Desktop\WinServices\Task 2\Supplier\Supplier.cpp(49,11): warning C4101:  cbSecurityDescriptor: неиспользованная локальная переменная
+  Supplier.vcxproj -> C:\Users\kiril\Desktop\WinServices\Task 2\x64\Debug\Supplier.exe

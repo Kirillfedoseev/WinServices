@@ -1,0 +1,4 @@
+﻿genctrs.mc : error : unable to open output file - C:\Users\ekaterina\source\repos\PerfGen\PerfGen\genctrs.h
+  MC: Unable to open genctrs.mc for input
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(128,5): error MSB3073: выход из команды "mc -r "C:\Users\ekaterina\source\repos\PerfGen\PerfGen" -h "C:\Users\ekaterina\source\repos\PerfGen\PerfGen" -v genctrs.mc
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(128,5): error MSB3073: :VCEnd" с кодом 1.

@@ -1,0 +1,5 @@
+﻿  stdafx.cpp
+  dllmain.cpp
+  Plugin1_1.cpp
+     Создается библиотека C:\Users\kiril\Desktop\WinServices\Task 2\Debug\Plugin1_1.lib и объект C:\Users\kiril\Desktop\WinServices\Task 2\Debug\Plugin1_1.exp
+  Plugin1_1.vcxproj -> C:\Users\kiril\Desktop\WinServices\Task 2\Debug\Plugin1_1.dll
