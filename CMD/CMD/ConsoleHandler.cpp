@@ -29,15 +29,15 @@ Package ConsoleHandler::readConsole() {
 		NULL))
 		ErrorExit((LPSTR)"ReadConsoleInput");
 
-	//// Adding terminating zero
-	//if (cNumRead >= 2 &&
-	//	'\n' == lpBuffer[cNumRead - 1] &&
-	//	'\r' == lpBuffer[cNumRead - 2]) {
-	//	lpBuffer[cNumRead - 2] = '\0';
-	//}
-	//else if (cNumRead > 0) {
-	//	lpBuffer[cNumRead] = '\0';
-	//}
+	// Adding terminating zero
+	if (cNumRead >= 2 &&
+		'\n' == lpBuffer[cNumRead - 1] &&
+		'\r' == lpBuffer[cNumRead - 2]) {
+		lpBuffer[cNumRead - 2] = '\0';
+	}
+	else if (cNumRead > 0) {
+		lpBuffer[cNumRead] = '\0';
+	}
 
 	memcpy(pack.str, lpBuffer, DEFAULT_BUFLEN);
 	pack.len = cNumRead;
