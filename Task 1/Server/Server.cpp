@@ -151,7 +151,7 @@ Server::Server() {
 	recvbuflen = DEFAULT_BUFLEN;
 }
 
-int Server::set_up_socket() {
+int Server::SetUpSocket() {
 	// Initialize Winsock
 	iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
 	if (iResult != 0) {
@@ -196,7 +196,7 @@ int Server::set_up_socket() {
 	return 0;
 }
 
-int Server::listen_socket() {
+int Server::ListeningSocket() {
 	iResult = listen(ListenSocket, SOMAXCONN);
 	if (iResult == SOCKET_ERROR) {
 		printf("listen failed with error: %d\n", WSAGetLastError());
@@ -206,7 +206,7 @@ int Server::listen_socket() {
 	}
 	return 0;
 }
-int Server::accept_client_socket() {
+int Server::AcceptClientSocket() {
 	// Accept a client socket
 	ClientSocket = accept(ListenSocket, NULL, NULL);
 	if (ClientSocket == INVALID_SOCKET) {
@@ -220,7 +220,7 @@ int Server::accept_client_socket() {
 	closesocket(ListenSocket);
 	return 0;
 }
-int Server::recv_data() {
+int Server::RecieveData() {
 	char* cmdargs = (char*)malloc(size_t(DEFAULT_BUFLEN));
 	ZeroMemory(cmdargs, DEFAULT_BUFLEN);
 
@@ -377,7 +377,7 @@ int Server::recv_data() {
 
 	return 0;
 }
-int Server::close_connection() {
+int Server::CloseConnection() {
 	// cleanup
 	closesocket(ClientSocket);
 	WSACleanup();

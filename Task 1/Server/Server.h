@@ -33,9 +33,9 @@ private:
 	int recvbuflen;
 public:
 	Server();
-	int set_up_socket();
-	int listen_socket();
-	int accept_client_socket();
-	int recv_data();
-	int close_connection();
+	int SetUpSocket();
+	int ListeningSocket();
+	int AcceptClientSocket();
+	int RecieveData();
+	int CloseConnection();
 };

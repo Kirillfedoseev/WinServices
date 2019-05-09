@@ -8,23 +8,23 @@ int main(int argc, char** argv) {
 		std::cout << "Not enough arguments";
 		return 0;
 	}
-	/*if (0 == strcmp(argv[1], "--service"))
+	
+	if (0 == strcmp(argv[1], "--service"))
 	{
 		_ttmain(0, NULL);
-
-	}*/
+	}
 
 	
-		std::cout << "Server is starting\n";
-		Server server = Server();
-		
-		server.set_up_socket();
-		server.listen_socket();
-		server.accept_client_socket();
+	std::cout << "Server is starting\n";
+	Server server = Server();
+	
+	server.SetUpSocket();
+	server.ListeningSocket();
+	server.AcceptClientSocket();
 
-		server.recv_data();
+	server.RecieveData();
 
-		server.close_connection();
+	server.CloseConnection();
 
 	
 

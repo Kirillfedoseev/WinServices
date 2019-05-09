@@ -1,4 +1,5 @@
 ﻿  Main.cpp
+  SVC.cpp
   Server.cpp
 C:\Users\kiril\Desktop\WinServices\Task 1\Server\Server.cpp(89,8): warning C4101:  nCharsWritten: неиспользованная локальная переменная
 C:\Users\kiril\Desktop\WinServices\Task 1\Server\Server.cpp(91,6): warning C4101:  iSendResult: неиспользованная локальная переменная
