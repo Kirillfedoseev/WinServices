@@ -1,7 +1,6 @@
 #include "pch.h"
 #include <iostream>
 #include "Client.h"
-#include "SVC.h"
 #include "ConsoleHandler.h"
 
 
@@ -11,11 +10,7 @@ int main(int argc, char** argv) {
 		std::cout << "Not enough arguments";
 		return 0;
 	}
-	if (0 == strcmp(argv[1], "--service"))
-	{
-		_ttmain(0, NULL);
 
-	}
 
 	if (strcmp(argv[1], "--client") == 0) {
 		std::cout << "Client is starting\n";
@@ -39,19 +34,7 @@ int main(int argc, char** argv) {
 		
 		client.client_close_connection();
 	}
-	else if (strcmp(argv[1], "--server") == 0) {
-		std::cout << "Server is starting\n";
-		Server server = Server();
-
-		server.set_up_socket();
-		server.listen_socket();
-		server.accept_client_socket();
-
-		server.recv_data();
-
-		server.close_connection();
-
-	}
+	
 
 	return 0;
 }

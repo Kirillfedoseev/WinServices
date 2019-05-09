@@ -155,8 +155,6 @@
     <ClInclude Include="ConsoleHandler.h" />
     <ClInclude Include="Package.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Server.h" />
-    <ClInclude Include="SVC.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
@@ -168,8 +166,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Server.cpp" />
-    <ClCompile Include="SVC.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
