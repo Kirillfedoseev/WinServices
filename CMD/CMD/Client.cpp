@@ -16,13 +16,10 @@ Client::Client() {
 	recvbuflen = DEFAULT_BUFLEN;
 }
 
-int Client::client_initialize(int argc, char **argv) {
+int Client::client_initialize(const char *argv) {
 
 	// Validate the parameters
-	if (argc != 2) {
-		printf("usage: %s server-name\n", argv[0]);
-		return 1;
-	}
+
 
 	// Initialize Winsock
 	iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -37,7 +34,7 @@ int Client::client_initialize(int argc, char **argv) {
 	hints.ai_protocol = IPPROTO_TCP;
 
 	// Resolve the server address and port
-	iResult = getaddrinfo(argv[1], DEFAULT_PORT, &hints, &result);
+	iResult = getaddrinfo(argv, DEFAULT_PORT, &hints, &result);
 	if (iResult != 0) {
 		printf("getaddrinfo failed with error: %d\n", iResult);
 		WSACleanup();

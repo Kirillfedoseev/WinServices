@@ -31,7 +31,7 @@ private:
 
 public:
 	Client();
-	int client_initialize(int argc, char **argv);
+	int client_initialize(const char *argv);
 	int client_connect();
 	int client_data_send(Package& pack);
 	Package& client_recv();
