@@ -1,0 +1,11 @@
+﻿  pch.cpp
+  Client.cpp
+  CMD.cpp
+  ConsoleHandler.cpp
+  Server.cpp
+r:\studies\3-year-2-semester\windows services\homeworks\cmd\cmd\server.cpp(102): warning C4101: 'nCharsWritten': unreferenced local variable
+r:\studies\3-year-2-semester\windows services\homeworks\cmd\cmd\server.cpp(104): warning C4101: 'iSendResult': unreferenced local variable
+r:\studies\3-year-2-semester\windows services\homeworks\cmd\cmd\server.cpp(244): warning C4101: 'ThreadId2': unreferenced local variable
+  SVC.cpp
+  Generating Code...
+  CMD.vcxproj -> R:\STUDIES\3-Year-2-Semester\Windows Services\Homeworks\CMD\x64\Debug\CMD.exe
