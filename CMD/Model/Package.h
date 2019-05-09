@@ -1,6 +1,6 @@
 #pragma once
 #include <windows.h>
-#define DEFAULT_BUFLEN 1024
+#define DEFAULT_BUFLEN 4096
 #pragma pack(push, 1)
 struct Package
 {

@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "Server.h"
-#include "../Model/Package.h"
 
 // Need to link with Ws2_32.lib
 #pragma comment (lib, "Ws2_32.lib")
@@ -163,6 +162,7 @@ Server::Server() {
 	result = NULL;
 	recvbuflen = DEFAULT_BUFLEN;
 }
+
 int Server::set_up_socket() {
 	// Initialize Winsock
 	iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -207,6 +207,7 @@ int Server::set_up_socket() {
 	freeaddrinfo(result);
 	return 0;
 }
+
 int Server::listen_socket() {
 	iResult = listen(ListenSocket, SOMAXCONN);
 	if (iResult == SOCKET_ERROR) {
@@ -316,13 +317,8 @@ int Server::recv_data() {
 	hThread = CreateThread(NULL, 0, GetAndSendInputThread, (LPVOID)hInputWrite, 0, &ThreadId1);
 	if (hThread == NULL) DisplayError("CreateThread");
 
-
-	//// Read the child's output.
-	//lThread = CreateThread(NULL, 0, ReadAndHandleOutput, (LPVOID)hOutputRead, 0, &ThreadId2);
-	//if (lThread == NULL) DisplayError("CreateThread");
 	// Redirection is complete
 
-	// TODO: READ FROM CLIENT AND WRITE TO CMD
 	Package data, pack;
 	char lpBuffer[DEFAULT_BUFLEN];
 	DWORD nBytesWrote, nBytesRead;
@@ -336,6 +332,8 @@ int Server::recv_data() {
 			{
 				DisplayError("WriteFile");
 			}
+			
+			Sleep(100);
 
 			if (!ReadFile(hOutputRead, lpBuffer, sizeof(lpBuffer),
 				&nBytesRead, NULL) || !nBytesRead)

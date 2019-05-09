@@ -75,6 +75,7 @@ int Client::client_connect() {
 	}
 	return 0;
 }
+
 int Client::client_data_send(Package& data) {
 
 	iResult = send(ConnectSocket, (const char*)&data, sizeof(Package), 0);
@@ -96,6 +97,7 @@ int Client::client_data_send(Package& data) {
 
 	return 0;
 }
+
 Package& Client::client_recv() {
 	// Receive until the peer closes the connection
 
