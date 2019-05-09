@@ -16,7 +16,6 @@
 
 #define DEFAULT_PORT "27015"
 
-
 class Client {
 private:
 	WSADATA wsaData;
