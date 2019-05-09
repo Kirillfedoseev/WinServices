@@ -3,13 +3,8 @@
 #include "Server.h"
 
 int main(int argc, char** argv) {
-
-	if (argc < 1) {
-		std::cout << "Not enough arguments";
-		return 0;
-	}
 	
-	if (0 == strcmp(argv[1], "--service"))
+	if (argc > 1 && 0 == strcmp(argv[1], "--service"))
 	{
 		_ttmain(0, NULL);
 	}
@@ -27,6 +22,5 @@ int main(int argc, char** argv) {
 	server.CloseConnection();
 
 	
-
 	return 0;
 }
