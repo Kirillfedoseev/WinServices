@@ -14,32 +14,41 @@ int main(int argc, char** argv) {
 	ConsoleHandler console_handler = ConsoleHandler();
 	Package read_pack, write_pack;
 
-	client.client_initialize(DEFAULT_ADDRESS);
-	client.client_connect();
-	read_pack.len = 0;
+	try
+	{
+		client.Initialize(DEFAULT_ADDRESS);
+		client.Connect();
 
-	client.client_data_send(read_pack);
+		read_pack.len = 0;
+		client.SendData(read_pack);
 
-	write_pack = client.client_recv();
-	console_handler.writeConsole(write_pack);
-
-	while (true) {
-		// Reading from console
-		
-
-		read_pack = console_handler.readConsole();
-		client.client_data_send(read_pack);
-
-		write_pack = client.client_recv();
+		write_pack = client.ReceiveData();
 		console_handler.writeConsole(write_pack);
-
-		
-
-		
+	}
+	catch (std::exception e)
+	{
+		std::cout << e.what();
+		return 1;
 	}
 	
-	client.client_close_connection();
-	
 
+	while (true) {
+		try
+		{
+			// Reading from console
+			read_pack = console_handler.readConsole();
+			client.SendData(read_pack);
+
+			write_pack = client.ReceiveData();
+			console_handler.writeConsole(write_pack);
+		}
+		catch (std::exception e)
+		{
+			std::cout << e.what();
+		}	
+	}
+	
+	client.CloseConnection();
+	
 	return 0;
 }

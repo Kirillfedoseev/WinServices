@@ -28,9 +28,9 @@ private:
 
 public:
 	Client();
-	int client_initialize(const char *argv);
-	int client_connect();
-	int client_data_send(Package& pack);
-	Package& client_recv();
-	int client_close_connection();
+	void Initialize(const char *hostName);
+	void Connect();
+	void SendData(Package& pack);
+	Package& ReceiveData();
+	void CloseConnection();
 };
