@@ -381,5 +381,7 @@ healthchecksdb
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 /**/MigrationBackup/
 /**/x64/
-CMD/Server/x64/
-CMD/CMD/x64/
+**/x64/
+Task 1/Server/x64/
+Task 1/Client/x64/
+Task 1/Model/x64/
