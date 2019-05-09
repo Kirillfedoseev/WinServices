@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "Server.h"
+#include "../Model/Package.h"
 
 // Need to link with Ws2_32.lib
 #pragma comment (lib, "Ws2_32.lib")

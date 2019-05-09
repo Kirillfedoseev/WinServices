@@ -160,8 +160,8 @@
     <ClCompile Include="SVC.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CMD\CMD.vcxproj">
-      <Project>{ffeb3cb5-948f-4170-a086-a2cc795ef848}</Project>
+    <ProjectReference Include="..\Model\Model.vcxproj">
+      <Project>{519bc49c-264b-4790-a470-c3968538f7b4}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

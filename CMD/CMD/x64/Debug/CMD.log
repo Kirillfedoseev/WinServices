@@ -1,5 +1,7 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (CMD.vcxproj).  Это может привести к ошибкам очистки и перестроения.
-  ConsoleHandler.cpp
+  pch.cpp
+  Client.cpp
   Main.cpp
+  ConsoleHandler.cpp
   Создание кода...
   CMD.vcxproj -> C:\Users\kiril\Desktop\WinServices\CMD\x64\Debug\Client.exe
