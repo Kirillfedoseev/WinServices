@@ -6,8 +6,6 @@
 #include <winsock2.h>
 #include <windows.h>
 #include <ws2tcpip.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include "../Model/Package.h"
 
 // Need to link with Ws2_32.lib
@@ -28,8 +26,7 @@ private:
 	struct addrinfo *result;
 	struct addrinfo hints;
 
-	char recvbuf[DEFAULT_BUFLEN];
-	int recvbuflen;
+	int receiveBufLen;
 public:
 	Server();
 	void SetUpSocket();

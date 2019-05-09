@@ -26,8 +26,7 @@ class ConsoleWrapper
 	DWORD nBytesWrote, nBytesRead;
 	
 	SECURITY_ATTRIBUTES sa;
-	
-	
+
 
 public:
 	ConsoleWrapper();

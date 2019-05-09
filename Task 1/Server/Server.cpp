@@ -7,7 +7,7 @@
 Server::Server() {
 	ListenSocket = INVALID_SOCKET;
 	ClientSocket = INVALID_SOCKET;
-	recvbuflen = DEFAULT_BUFLEN;
+	receiveBufLen = DEFAULT_BUFLEN;
 	result = NULL;
 }
 

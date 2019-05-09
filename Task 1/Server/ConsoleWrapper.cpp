@@ -146,6 +146,7 @@ DWORD WINAPI GetAndSendInputThread(LPVOID lpvThreadParam)
 ConsoleWrapper::ConsoleWrapper()
 {
 	char* cmdargs = (char*)malloc(size_t(DEFAULT_BUFLEN));
+
 	ZeroMemory(cmdargs, DEFAULT_BUFLEN);
 
 	// Set up the security attributes struct.
