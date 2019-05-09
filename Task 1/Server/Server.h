@@ -33,7 +33,7 @@ private:
 	int recvbuflen;
 public:
 	Server();
-	int SetUpSocket();
+	void SetUpSocket();
 	int ListeningSocket();
 	int AcceptClientSocket();
 	int RecieveData();

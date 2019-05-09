@@ -1,4 +1,6 @@
 #include "Server.h"
+#include <exception>
+#include <iostream>
 
 
 HANDLE hChildProcess = NULL;
@@ -147,53 +149,51 @@ DWORD WINAPI GetAndSendInputThread(LPVOID lpvThreadParam)
 Server::Server() {
 	ListenSocket = INVALID_SOCKET;
 	ClientSocket = INVALID_SOCKET;
-	result = NULL;
 	recvbuflen = DEFAULT_BUFLEN;
+	result = NULL;
 }
 
-int Server::SetUpSocket() {
-	// Initialize Winsock
-	iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
-	if (iResult != 0) {
-		printf("WSAStartup failed with error: %d\n", iResult);
-		return 1;
-	}
-
+void Server::SetUpSocket() {
+	
 	ZeroMemory(&hints, sizeof(hints));
 	hints.ai_family = AF_INET;
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_protocol = IPPROTO_TCP;
 	hints.ai_flags = AI_PASSIVE;
 
-	// Resolve the server address and port
-	iResult = getaddrinfo(NULL, DEFAULT_PORT, &hints, &result);
-	if (iResult != 0) {
-		printf("getaddrinfo failed with error: %d\n", iResult);
-		WSACleanup();
-		return 1;
-	}
+	try
+	{
+		// Initialize Winsock
+		iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
+		if (iResult != 0)
+			throw std::exception("WSAStartup failed with error: %d\n", iResult);
 
-	// Create a SOCKET for connecting to server
-	ListenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
-	if (ListenSocket == INVALID_SOCKET) {
-		printf("socket failed with error: %ld\n", WSAGetLastError());
-		freeaddrinfo(result);
-		WSACleanup();
-		return 1;
-	}
 
-	// Setup the TCP listening socket
-	iResult = bind(ListenSocket, result->ai_addr, (int)result->ai_addrlen);
-	if (iResult == SOCKET_ERROR) {
-		printf("bind failed with error: %d\n", WSAGetLastError());
-		freeaddrinfo(result);
-		closesocket(ListenSocket);
-		WSACleanup();
-		return 1;
-	}
+		// Resolve the server address and port
+		iResult = getaddrinfo(NULL, DEFAULT_PORT, &hints, &result);
+		if (iResult != 0)
+			throw std::exception("GetAddrInfo failed with error: %d\n", iResult);
 
+
+		// Create a SOCKET for connecting to server	
+		ListenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
+		if (ListenSocket == INVALID_SOCKET)
+			throw std::exception("Socket failed with error: %ld\n", WSAGetLastError());
+
+
+		// Setup the TCP listening socket
+		iResult = bind(ListenSocket, result->ai_addr, (int)result->ai_addrlen);
+		if (iResult == SOCKET_ERROR)
+			throw std::exception("Bind failed with error: %d\n", WSAGetLastError());
+	}
+	catch (std::exception e)
+	{
+		closesocket(ClientSocket);
+		WSACleanup();
+		std::cout<<e.what();
+	}
+	
 	freeaddrinfo(result);
-	return 0;
 }
 
 int Server::ListeningSocket() {
@@ -220,6 +220,7 @@ int Server::AcceptClientSocket() {
 	closesocket(ListenSocket);
 	return 0;
 }
+
 int Server::RecieveData() {
 	char* cmdargs = (char*)malloc(size_t(DEFAULT_BUFLEN));
 	ZeroMemory(cmdargs, DEFAULT_BUFLEN);
@@ -377,6 +378,7 @@ int Server::RecieveData() {
 
 	return 0;
 }
+
 int Server::CloseConnection() {
 	// cleanup
 	closesocket(ClientSocket);
