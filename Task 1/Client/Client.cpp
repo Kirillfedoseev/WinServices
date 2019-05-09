@@ -9,20 +9,14 @@
 #pragma comment (lib, "AdvApi32.lib")
 
 
-
 Client::Client() {
 	ConnectSocket = INVALID_SOCKET;
 	ptr = NULL, result = NULL;
 	recvbuflen = DEFAULT_BUFLEN;
 }
 
-int Client::client_initialize(int argc, char **argv) {
+int Client::client_initialize(const char *address) {
 
-	// Validate the parameters
-	if (argc != 2) {
-		printf("usage: %s server-name\n", argv[0]);
-		return 1;
-	}
 
 	// Initialize Winsock
 	iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -37,7 +31,7 @@ int Client::client_initialize(int argc, char **argv) {
 	hints.ai_protocol = IPPROTO_TCP;
 
 	// Resolve the server address and port
-	iResult = getaddrinfo(argv[1], DEFAULT_PORT, &hints, &result);
+	iResult = getaddrinfo(address, DEFAULT_PORT, &hints, &result);
 	if (iResult != 0) {
 		printf("getaddrinfo failed with error: %d\n", iResult);
 		WSACleanup();
@@ -81,28 +75,41 @@ int Client::client_data_send(Data& data) {
 
 	iResult = send(ConnectSocket, (const char*)&data, sizeof(Data), 0);
 	if (iResult == SOCKET_ERROR) {
-		printf("Send failed with error: %d\n", WSAGetLastError());
+		printf("send failed with error: %d\n", WSAGetLastError());
 		closesocket(ConnectSocket);
 		WSACleanup();
 		return 1;
 	}
 
+	//// shutdown the connection since no more data will be sent
+	//iResult = shutdown(ConnectSocket, SD_SEND);
+	//if (iResult == SOCKET_ERROR) {
+	//	printf("shutdown failed with error: %d\n", WSAGetLastError());
+	//	closesocket(ConnectSocket);
+	//	WSACleanup();
+	//	return 1;
+	//}
+
 	return 0;
 }
 Data& Client::client_recv() {
-	
 	// Receive until the peer closes the connection
-	iResult = recv(ConnectSocket, (char *)&data, sizeof(Data), 0);
 
-	if (iResult == 0)
+	iResult = recv(ConnectSocket, (char *)&data, sizeof(Data), 0);
+	if (iResult > 0) {
+		//printf("Bytes received: %d\n", iResult);
+	}
+	else if (iResult == 0)
 		printf("Connection closed\n");
-	else if(iResult < 0)
+	else
 		printf("recv failed with error: %d\n", WSAGetLastError());
 
+	
 	return data;
 }
 
 int Client::client_close_connection() {
+	
 	
 	// Close scoket and cleanup
 	closesocket(ConnectSocket);

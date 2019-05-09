@@ -8,6 +8,6 @@
 #define PCH_H
 
 // Добавьте сюда заголовочные файлы для предварительной компиляции
-#include "Data.h"
+#include "framework.h"
 
 #endif //PCH_H

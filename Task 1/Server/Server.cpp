@@ -1,17 +1,5 @@
-#undef UNICODE
-
-#define WIN32_LEAN_AND_MEAN
-
 #include "Server.h"
-#include <windows.h>
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#include <stdlib.h>
-#include <stdio.h>
-
-
-// Need to link with Ws2_32.lib
-#pragma comment (lib, "Ws2_32.lib")
+#include <iostream>
 
 LPSTR cmdPath = LPSTR("C:\\Windows\\System32\\cmd.exe");
 
@@ -40,11 +28,6 @@ void DisplayError(const char *pszAPI)
 		lstrlen(szPrintBuffer), &nCharsWritten, NULL);
 
 	LocalFree(lpvMessageBuffer);
-}
-
-int ThrowSocketError(const char *errorSocket)
-{
-	
 }
 
 
@@ -161,6 +144,7 @@ int Server::set_up_socket() {
 		WSACleanup();
 		return 1;
 	}
+
 
 	// Create a SOCKET for connecting to server
 	ListenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);

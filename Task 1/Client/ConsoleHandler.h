@@ -1,7 +1,10 @@
 #pragma once
+
 #include <windows.h>
 #include <stdio.h>
+
 #include "../Model/Data.h"
+
 
 
 class ConsoleHandler {

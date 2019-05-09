@@ -1,26 +1,18 @@
-#include "pch.h"
 #include <iostream>
 #include "SVC.h"
-#include "ConsoleHandler.h"
 #include "Server.h"
-#include "../ClientServerPipe/SVC.h"
 
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv) 
+{
 
-	if (argc < 1) {
-		std::cout << "Not enough arguments";
-		return 0;
-	}
-
-	if (0 == strcmp(argv[1], "--service"))
+	/*if (argc >= 1 && 0 == strcmp(argv[1], "--service"))
 	{
-		_ttmain(0, NULL);
+		_ttmain(0, nullptr);
 	}
-
+*/
 	
-	
-	std::cout << "Server is starting\n";
+	std::cout << "Server is starting\n"<<"\n"<<"Port: "<< DEFAULT_PORT;
 	Server server = Server();
 
 	server.set_up_socket();

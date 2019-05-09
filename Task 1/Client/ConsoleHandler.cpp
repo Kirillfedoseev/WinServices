@@ -1,6 +1,9 @@
 #include "ConsoleHandler.h"
 
 
+#include "ConsoleHandler.h"
+
+
 ConsoleHandler::ConsoleHandler() {
 	DWORD cNumRead = 0, lpNumberOfCharsWritten = 0;
 	// Get the standard input handle. 
