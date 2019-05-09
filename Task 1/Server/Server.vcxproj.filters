@@ -21,6 +21,9 @@
     <ClInclude Include="SVC.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="ConsoleWrapper.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SVC.cpp">
@@ -30,6 +33,9 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleWrapper.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

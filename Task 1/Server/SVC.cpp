@@ -193,7 +193,7 @@ VOID SvcInit(DWORD dwArgc, LPTSTR *lpszArgv)
 	server.SetUpSocket();
 	server.ListeningSocket();
 	server.AcceptClientSocket();
-	server.RecieveData();
+	server.ReceiveData();
 	server.CloseConnection();
 	
 	while (true)

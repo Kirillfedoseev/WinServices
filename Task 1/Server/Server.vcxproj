@@ -151,10 +151,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ConsoleWrapper.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="SVC.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ConsoleWrapper.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="SVC.cpp" />

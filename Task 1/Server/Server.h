@@ -12,7 +12,6 @@
 
 // Need to link with Ws2_32.lib
 #pragma comment (lib, "Ws2_32.lib")
-// #pragma comment (lib, "Mswsock.lib")
 
 #define DEFAULT_PORT "27015"
 
@@ -34,8 +33,8 @@ private:
 public:
 	Server();
 	void SetUpSocket();
-	int ListeningSocket();
-	int AcceptClientSocket();
-	int RecieveData();
-	int CloseConnection();
+	void ListeningSocket();
+	void AcceptClientSocket();
+	void ReceiveData();
+	void CloseConnection();
 };

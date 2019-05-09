@@ -11,15 +11,23 @@ int main(int argc, char** argv) {
 
 	
 	std::cout << "Server is starting\n";
-	Server server = Server();
-	
-	server.SetUpSocket();
-	server.ListeningSocket();
-	server.AcceptClientSocket();
+	try
+	{
+		Server server = Server();
 
-	server.RecieveData();
+		server.SetUpSocket();
+		server.ListeningSocket();
+		server.AcceptClientSocket();
 
-	server.CloseConnection();
+		server.ReceiveData();
+
+		server.CloseConnection();
+	}
+	catch (std::exception e)
+	{
+		std::cout << e.what();
+		std::cin;
+	}
 
 	
 	return 0;
