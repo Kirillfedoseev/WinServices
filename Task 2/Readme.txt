@@ -5,6 +5,7 @@ Launch the system:
 	1)server_ip: 127.0.0.1 
 	2)DLL GUID: {00000000-0000-0000-0200-000000000000} or 
 				{00000000-0000-0000-0100-000000000000} 
+
 Example: > client.exe 127.0.0.1 {00000000-0000-0000-0100-000000000000} 
 
 The should be like "copyrigth"
