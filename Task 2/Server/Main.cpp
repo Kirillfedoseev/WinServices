@@ -4,13 +4,9 @@
 #include "stdafx.h"
 
 #include <list>
-#include <stdio.h>
-#define SERVICE
 #include "../api.h"
 #include "../plugin_id.h"
 #include "Server.h"
-#define DEFAULT_PORT "27015"
-
 
 
 int main(int argc, char* argv[])

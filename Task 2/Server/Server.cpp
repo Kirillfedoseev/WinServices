@@ -3,7 +3,6 @@
 #include "../api.h"
 #include "../plugin_id.h"
 
-const char* GetPluginCopyright(GUID* guid);
 
 typedef struct _DllListElement
 {
@@ -55,6 +54,7 @@ const char* GetPluginCopyright(GUID* guid)
 	}
 	return "Error";
 }
+
 
 Server::Server() {
 	ListenSocket = INVALID_SOCKET;
@@ -193,6 +193,7 @@ void Server::CloseConnection() {
 	closesocket(ListenSocket);
 	WSACleanup();
 }
+
 
 void Server::SendMetrics()
 {
