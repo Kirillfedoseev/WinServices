@@ -1,194 +1,9 @@
-// Server.cpp : Defines the entry point for the console application.
-//
-
 #include "stdafx.h"
-
-#include <list>
-#include <stdio.h>
-#define SERVICE
+#include "Server.h"
 #include "../api.h"
 #include "../plugin_id.h"
-#define DEFAULT_PORT "27015"
-
-long lBytesRecieved = 0;
-
-void set_metric_to_register(const long metric)
-{
-	HKEY hKey;
-	LPCWSTR lpSub = TEXT("Software\\PerfGen");
-	LPCWSTR value = TEXT("Input Value");
-	DWORD data;
-	DWORD size = sizeof(DWORD);
-	DWORD type = REG_DWORD;
-
-	RegOpenKeyEx(HKEY_CURRENT_USER, lpSub, 0, KEY_ALL_ACCESS, &hKey);
-	RegSetValueEx(hKey, value, 0, REG_DWORD, (LPBYTE)& metric, sizeof(DWORD));
-}
-
-
-SOCKET server_init(void)
-{
-	// Initialize Winsock
-	WSADATA wsaData;
-	int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
-	if (iResult != 0) {
-		printf("WSAStartup failed with error: %d\n", iResult);
-		WSACleanup();
-		return INVALID_SOCKET;
-	}
-
-	struct addrinfo *result = NULL,
-		hints;
-
-	ZeroMemory(&hints, sizeof(hints));
-	hints.ai_family = AF_INET;
-	hints.ai_socktype = SOCK_STREAM;
-	hints.ai_protocol = IPPROTO_TCP;
-	hints.ai_flags = AI_PASSIVE;
-
-	// Resolve the server address and port
-	iResult = getaddrinfo(NULL, DEFAULT_PORT, &hints, &result);
-	if (iResult != 0) {
-		printf("getaddrinfo failed with error: %d\n", iResult);
-		WSACleanup();
-		return INVALID_SOCKET;
-	}
-
-	// Create a SOCKET for connecting to server
-	const SOCKET listenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
-	if (listenSocket == INVALID_SOCKET) {
-		printf("socket failed with error: %d\n", WSAGetLastError());
-		freeaddrinfo(result);
-		WSACleanup();
-		return INVALID_SOCKET;
-	}
-
-	// Setup the TCP listening socket
-	iResult = bind(listenSocket, result->ai_addr, (int)result->ai_addrlen);
-	if (iResult == SOCKET_ERROR) {
-		printf("bind failed with error: %d\n", WSAGetLastError());
-		freeaddrinfo(result);
-		closesocket(listenSocket);
-		WSACleanup();
-		return INVALID_SOCKET;
-	}
-
-	freeaddrinfo(result);
-	//closesocket(listenSocket);	//this should be done by calling server_stop
-	//WSACleanup();					//this should be done by calling server_done
-	return listenSocket;
-}
-
-void server_stop(const SOCKET listenSocket)
-{
-	closesocket(listenSocket);
-}
-
-void server_done(void)
-{
-	WSACleanup();
-}
-
-SOCKET server_listen(const SOCKET listenSocket)
-{
-	const int iResult = listen(listenSocket, SOMAXCONN);
-	if (iResult == SOCKET_ERROR) {
-		printf("listen failed with error: %d\n", WSAGetLastError());
-		return INVALID_SOCKET;
-	}
-
-	// Accept a client socket
-	const SOCKET clientSocket = accept(listenSocket, NULL, NULL);
-	if (clientSocket == INVALID_SOCKET) {
-		printf("accept failed with error: %d\n", WSAGetLastError());
-		return INVALID_SOCKET;
-	}
-
-	return clientSocket;
-}
 
 const char* GetPluginCopyright(GUID* guid);
-
-
-int server_process_request(const SOCKET clientSocket)
-{
-    #define MAX_BUFFER 1024
-	int iResult;
-	char recvbuf[MAX_BUFFER];
-	const int recvbuflen = sizeof(recvbuf);
-	char sendbuf[MAX_BUFFER] = "Copyrigth Server 2000-2019";
-	int sendbuflen = sizeof(sendbuf);
-
-	// Receive until the peer shuts down the connection
-	do {
-
-		iResult = recv(clientSocket, (char*)&recvbuf, recvbuflen, 0);
-
-		if (iResult > 0) {
-			printf("Bytes received: %d\n", iResult);
-			
-			lBytesRecieved += (long)iResult;
-			
-			set_metric_to_register(lBytesRecieved);
-			
-			if (iResult != 16)
-			{
-				printf("Invalid send buffer length \n");
-			}
-			else
-			{
-				auto ret = GetPluginCopyright((GUID*)recvbuf);
-				memcpy(sendbuf, ret, strlen(ret) + 1); //TODO check overflow
-				sendbuflen = strlen(ret) + 1;
-			}
-
-			const int iSendResult = send(clientSocket, (char*)&sendbuf, sendbuflen, 0);
-			if (iSendResult == SOCKET_ERROR) {
-				printf("send failed with error: %d\n", WSAGetLastError());
-				closesocket(clientSocket);
-				return 1;
-			}
-			printf("Bytes sent: %d\n", iSendResult);
-		}
-		else if (iResult == 0)
-			printf("Connection closing...\n");
-		else  {
-			printf("recv failed with error: %d\n", WSAGetLastError());
-			closesocket(clientSocket);
-			return 1;
-		}
-
-	} while (iResult > 0);
-
-	// shutdown the connection since we're done
-	iResult = shutdown(clientSocket, SD_SEND);
-	if (iResult == SOCKET_ERROR) {
-		printf("shutdown failed with error: %d\n", WSAGetLastError());
-		closesocket(clientSocket);
-		return 1;
-	}
-
-	// cleanup
-	closesocket(clientSocket);
-	return 0;
-}
-
-int server(int argc, char **argv)
-{
-	const SOCKET listenSocket = server_init();
-	if (listenSocket == INVALID_SOCKET) return 1;
-
-	while (1)
-	{
-		const SOCKET clientSocket = server_listen(listenSocket);
-		if (clientSocket == INVALID_SOCKET) break;
-		server_process_request(clientSocket);
-	}
-
-	server_stop(listenSocket);
-	server_done();
-	return 0;
-}
 
 typedef struct _DllListElement
 {
@@ -214,7 +29,7 @@ const char* GetPluginCopyright(GUID* guid)
 	DWORD dwBufferSize = sizeof(szBuffer);
 	ULONG nError;
 	nError = RegQueryValueExW(hKey, name_key, 0, NULL, (LPBYTE)szBuffer, &dwBufferSize);
-	
+
 	if (nError != ERROR_SUCCESS)
 		std::wcout << "Cannot read registry key " << lpSub << std::endl << "\tERROR: " << nError << std::endl;
 	else
@@ -227,7 +42,7 @@ const char* GetPluginCopyright(GUID* guid)
 	DllListElement library = { plugin1_id, szBuffer, nullptr };
 
 	printf("GetPluginCopyright: Dll %S is loading \n", library.DllName);
-	
+
 	auto hLibrary = LoadLibrary(library.DllName);
 	if (hLibrary)
 	{
@@ -241,8 +56,153 @@ const char* GetPluginCopyright(GUID* guid)
 	return "Error";
 }
 
-int main(int argc, char* argv[])
+Server::Server() {
+	ListenSocket = INVALID_SOCKET;
+	ClientSocket = INVALID_SOCKET;
+	receiveBufLen = DEFAULT_BUFLEN;
+
+	result = NULL;
+
+	ZeroMemory(&hints, sizeof(hints));
+	hints.ai_family = AF_INET;
+	hints.ai_socktype = SOCK_STREAM;
+	hints.ai_protocol = IPPROTO_TCP;
+	hints.ai_flags = AI_PASSIVE;
+}
+
+
+void Server::SetUpSocket() {
+
+	try
+	{
+		// Initialize Winsock
+		iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
+		if (iResult != 0)
+			throw std::exception("WSAStartup failed with error: %d\n", iResult);
+
+
+		// Resolve the server address and port
+		iResult = getaddrinfo(NULL, DEFAULT_PORT, &hints, &result);
+		if (iResult != 0)
+			throw std::exception("GetAddrInfo failed with error: %d\n", iResult);
+
+
+		// Create a SOCKET for connecting to server	
+		ListenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
+		if (ListenSocket == INVALID_SOCKET)
+			throw std::exception("Socket failed with error: %ld\n", WSAGetLastError());
+
+
+		// Setup the TCP listening socket
+		iResult = bind(ListenSocket, result->ai_addr, (int)result->ai_addrlen);
+		if (iResult == SOCKET_ERROR)
+			throw std::exception("Bind failed with error: %d\n", WSAGetLastError());
+	}
+	catch (std::exception e)
+	{
+		CloseConnection();
+		freeaddrinfo(result);
+		throw e;
+	}
+	
+	freeaddrinfo(result);
+}
+
+
+void Server::ListeningSocket() {
+	try
+	{
+		iResult = listen(ListenSocket, SOMAXCONN);
+		if (iResult == SOCKET_ERROR)
+			throw std::exception("Listen failed with error: %d\n", WSAGetLastError());
+		
+		ClientSocket = accept(ListenSocket, NULL, NULL);
+		if (ClientSocket == INVALID_SOCKET)
+			throw std::exception("Accept failed with error: %d\n", WSAGetLastError());
+	}
+	catch (std::exception e)
+	{
+		CloseConnection();
+		throw e;
+	}
+
+	//todo closesocket(ListenSocket);
+}
+
+
+void Server::HandleRequest() {
+	
+	char recvbuf[DEFAULT_BUFLEN];
+	char sendbuf[DEFAULT_BUFLEN] = "Copyright Server 2000-2019";
+
+	try
+	{
+		while (true)
+		{
+			iResult = recv(ClientSocket, (char*)& recvbuf, receiveBufLen, 0);
+			if (iResult > 0) {
+				printf("Bytes received: %d\n", iResult);
+
+				lBytesRecieved += (long) iResult;
+
+
+				if (iResult != 16)
+					throw std::exception("Invalid send buffer length \n");
+
+				const char* ret = GetPluginCopyright((GUID*) recvbuf);
+				memcpy(sendbuf, ret, strlen(ret) + 1);
+				int sendBufLen = strlen(ret) + 1;
+
+
+				// Send copyright back to client
+				iSendResult = send(ClientSocket, (char*)& sendbuf, sendBufLen, 0);
+				if (iSendResult == SOCKET_ERROR) 
+					throw std::exception("Send failed: %d\n", WSAGetLastError());
+				
+				printf("Bytes sent: %d\n", iSendResult);
+
+			}
+			else if (iResult == 0)
+			{
+				printf("Connection closing...\n");
+				break;
+			}
+			else 
+				throw std::exception("Receive failed with error: %d\n", WSAGetLastError());
+		}
+
+		// shutdown the connection since we're done
+		iResult = shutdown(ClientSocket, SD_SEND);
+		if (iResult == SOCKET_ERROR)
+			throw std::exception("Shutdown failed with error: %d\n", WSAGetLastError());
+		
+		closesocket(ClientSocket);
+		
+	}
+	catch (std::exception e)
+	{
+		closesocket(ClientSocket);
+		throw e;
+	}
+
+}
+
+
+void Server::CloseConnection() {
+	// cleanup
+	closesocket(ListenSocket);
+	WSACleanup();
+}
+
+void Server::SendMetrics()
 {
-	server(argc, argv);
-	return 0;
+	HKEY hKey;
+	LPCWSTR lpSub = TEXT("Software\\PerfGen");
+	LPCWSTR value = TEXT("Input Value");
+	DWORD data;
+	DWORD size = sizeof(DWORD);
+	DWORD type = REG_DWORD;
+
+	RegOpenKeyEx(HKEY_CURRENT_USER, lpSub, 0, KEY_ALL_ACCESS, &hKey);
+	RegSetValueEx(hKey, value, 0, REG_DWORD, (LPBYTE)& lBytesRecieved, sizeof(DWORD));
 }
