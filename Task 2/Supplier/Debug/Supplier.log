@@ -1,4 +1,3 @@
-﻿  pch.cpp
-  Supplier.cpp
-C:\Users\kiril\Desktop\WinServices\Task 2\Supplier\Supplier.cpp(40,11): warning C4101:  evil: неиспользованная локальная переменная
+﻿  Supplier.cpp
+C:\Users\kiril\Desktop\WinServices\Task 2\Supplier\Supplier.cpp(22,11): warning C4101:  evil: неиспользованная локальная переменная
   Supplier.vcxproj -> C:\Users\kiril\Desktop\WinServices\Task 2\Debug\Supplier.exe

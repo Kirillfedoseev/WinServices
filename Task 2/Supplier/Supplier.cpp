@@ -3,24 +3,6 @@
 #include "pch.h"
 #include <iostream>
 #include <windows.h>
-#include <string> 
-#include <string.h> 
-#include <list>
-#define SERVICE
-#include "../api.h"
-#include "../plugin_id.h"
-
-typedef struct _DllListElement
-{
-	GUID pluginId;
-	const wchar_t* DllName;
-	pfn_GetCopyright GetCopyright;
-} DllListElement;
-
-std::list<DllListElement> g_DllList = {
-	{ plugin1_id, L"Plugin1_1.dll", nullptr },
-	{ plugin2_id, L"Pugin2.dll", nullptr }
-};
 
 
 
@@ -46,9 +28,9 @@ int main(int argc, char** argv)
 	nError = RegSetValueEx(hKey, name_key, 0, REG_SZ, (LPBYTE) str1, 2* strlen(argv[1]));
 
 	if (nError != ERROR_SUCCESS)
-		std::wcout << "Cannot read registry key " << lpSub << std::endl << "\tERROR: " << nError << std::endl;
+		std::cout << "Cannot read registry key " << lpSub << std::endl << "\tERROR: " << nError << std::endl;
 	else
-		std::wcout << "Success: value: was write "<< argv[1] << str1 << std::endl;
+		std::cout << "Success, value was written: "<< argv[1] << std::endl;
 
 
 	RegCloseKey(hKey);
