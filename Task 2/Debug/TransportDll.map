@@ -43,20 +43,20 @@
   Address         Publics by Value              Rva+Base       Lib:Object
 
  0000:00000000       ___hybrid_code_map_count   00000000     <absolute>
- 0000:00000000       ___guard_fids_count        00000000     <absolute>
- 0000:00000000       ___hybrid_code_map         00000000     <absolute>
- 0000:00000000       ___guard_iat_count         00000000     <absolute>
- 0000:00000000       ___guard_iat_table         00000000     <absolute>
- 0000:00000000       ___enclave_config          00000000     <absolute>
- 0000:00000000       ___safe_se_handler_count   00000000     <absolute>
- 0000:00000000       ___hybrid_auxiliary_iat    00000000     <absolute>
  0000:00000000       ___AbsoluteZero            00000000     <absolute>
- 0000:00000000       ___guard_longjmp_count     00000000     <absolute>
+ 0000:00000000       ___hybrid_code_map         00000000     <absolute>
  0000:00000000       ___dynamic_value_reloc_table 00000000     <absolute>
  0000:00000000       ___volatile_metadata       00000000     <absolute>
- 0000:00000000       ___guard_fids_table        00000000     <absolute>
+ 0000:00000000       ___guard_iat_count         00000000     <absolute>
+ 0000:00000000       ___enclave_config          00000000     <absolute>
+ 0000:00000000       ___guard_iat_table         00000000     <absolute>
+ 0000:00000000       ___guard_longjmp_count     00000000     <absolute>
+ 0000:00000000       ___guard_fids_count        00000000     <absolute>
+ 0000:00000000       ___hybrid_auxiliary_iat    00000000     <absolute>
  0000:00000000       ___guard_longjmp_table     00000000     <absolute>
  0000:00000000       ___safe_se_handler_table   00000000     <absolute>
+ 0000:00000000       ___guard_fids_table        00000000     <absolute>
+ 0000:00000000       ___safe_se_handler_count   00000000     <absolute>
  0000:00000100       ___guard_flags             00000100     <absolute>
  0000:00000000       ___ImageBase               10000000     <linker-defined>
  0001:00000000       __enc$textbss$begin        10001000     <linker-defined>
@@ -68,9 +68,9 @@
  0002:00000970       ??0exception@std@@QAE@QBD@Z 10011970 f i TransportDll.obj
  0002:00000a90       ??0exception@std@@QAE@QBDH@Z 10011a90 f i TransportDll.obj
  0002:00000b50       ??1exception@std@@UAE@XZ   10011b50 f i TransportDll.obj
- 0002:00000c00       ??_Eexception@std@@UAEPAXI@Z 10011c00 f i TransportDll.obj
  0002:00000c00       ??_Gexception@std@@UAEPAXI@Z 10011c00 f i TransportDll.obj
- 0002:00000c70       ?CleanUp@TransportDll@@QAEXXZ 10011c70 f   TransportDll.obj
+ 0002:00000c00       ??_Eexception@std@@UAEPAXI@Z 10011c00 f i TransportDll.obj
+ 0002:00000c70       ?CleanUp@TransportDll@@AAEXXZ 10011c70 f   TransportDll.obj
  0002:00000d00       ?GetCopyRight@TransportDll@@QAEPBDPAU_GUID@@@Z 10011d00 f   TransportDll.obj
  0002:00001120       ?Initialize@TransportDll@@QAEXPAD@Z 10012120 f   TransportDll.obj
  0002:000014d0       ?__autoclassinit2@TransportDll@@QAEXI@Z 100124d0 f i TransportDll.obj
@@ -103,8 +103,8 @@
  0002:00001c20       ??3@YAXPAXI@Z              10012c20 f   MSVCRTD:delete_scalar_size.obj
  0002:00001c40       @__security_check_cookie@4 10012c40 f   MSVCRTD:secchk.obj
  0002:00001c60       ??1type_info@@UAE@XZ       10012c60 f   MSVCRTD:std_type_info_static.obj
- 0002:00001c80       ??_Gtype_info@@UAEPAXI@Z   10012c80 f i MSVCRTD:std_type_info_static.obj
  0002:00001c80       ??_Etype_info@@UAEPAXI@Z   10012c80 f i MSVCRTD:std_type_info_static.obj
+ 0002:00001c80       ??_Gtype_info@@UAEPAXI@Z   10012c80 f i MSVCRTD:std_type_info_static.obj
  0002:00002290       __CRT_INIT@12              10013290 f   MSVCRTD:dll_dllmain.obj
  0002:000022b0       __DllMainCRTStartup@12     100132b0 f   MSVCRTD:dll_dllmain.obj
  0002:00002390       ?_RTC_AllocaFailure@@YAXPAXPAU_RTC_ALLOCA_NODE@@H@Z 10013390 f   MSVCRTD:error.obj
@@ -157,8 +157,8 @@
  0002:00003c00       ___scrt_initialize_winrt   10014c00 f   MSVCRTD:utility_desktop.obj
  0002:00003c10       ___scrt_is_managed_app     10014c10 f   MSVCRTD:utility_desktop.obj
  0002:00003cc0       ___scrt_set_unhandled_exception_filter 10014cc0 f   MSVCRTD:utility_desktop.obj
- 0002:00003ce0       ___scrt_exe_initialize_mta 10014ce0 f   MSVCRTD:utility_desktop.obj
  0002:00003ce0       ___scrt_stub_for_initialize_mta 10014ce0 f   MSVCRTD:utility_desktop.obj
+ 0002:00003ce0       ___scrt_exe_initialize_mta 10014ce0 f   MSVCRTD:utility_desktop.obj
  0002:00003cf0       ___scrt_unhandled_exception_filter@4 10014cf0 f   MSVCRTD:utility_desktop.obj
  0002:00003d70       __crt_debugger_hook        10014d70 f   MSVCRTD:utility_desktop.obj
  0002:00003d90       __RTC_Initialize           10014d90 f   MSVCRTD:initsect.obj
@@ -232,21 +232,21 @@
  0002:00004e6d       _VirtualQuery@12           10015e6d f   kernel32:KERNEL32.dll
  0002:00004e73       _FreeLibrary@4             10015e73 f   kernel32:KERNEL32.dll
  0002:00004e79       _GetProcAddress@8          10015e79 f   kernel32:KERNEL32.dll
- 0002:00004e80       ___acrt_initialize         10015e80 f   MSVCRTD:ucrt_stubs.obj
  0002:00004e80       ___vcrt_initialize         10015e80 f   MSVCRTD:ucrt_stubs.obj
  0002:00004e80       ___scrt_stub_for_acrt_initialize 10015e80 f   MSVCRTD:ucrt_stubs.obj
- 0002:00004e90       ___acrt_thread_attach      10015e90 f   MSVCRTD:ucrt_stubs.obj
+ 0002:00004e80       ___acrt_initialize         10015e80 f   MSVCRTD:ucrt_stubs.obj
  0002:00004e90       ___vcrt_thread_attach      10015e90 f   MSVCRTD:ucrt_stubs.obj
  0002:00004e90       ___scrt_stub_for_acrt_thread_attach 10015e90 f   MSVCRTD:ucrt_stubs.obj
+ 0002:00004e90       ___acrt_thread_attach      10015e90 f   MSVCRTD:ucrt_stubs.obj
+ 0002:00004ea0       ___vcrt_thread_detach      10015ea0 f   MSVCRTD:ucrt_stubs.obj
  0002:00004ea0       ___scrt_stub_for_acrt_thread_detach 10015ea0 f   MSVCRTD:ucrt_stubs.obj
  0002:00004ea0       ___acrt_thread_detach      10015ea0 f   MSVCRTD:ucrt_stubs.obj
- 0002:00004ea0       ___vcrt_thread_detach      10015ea0 f   MSVCRTD:ucrt_stubs.obj
- 0002:00004eb0       ___vcrt_uninitialize       10015eb0 f   MSVCRTD:ucrt_stubs.obj
  0002:00004eb0       ___scrt_stub_for_acrt_uninitialize 10015eb0 f   MSVCRTD:ucrt_stubs.obj
  0002:00004eb0       ___acrt_uninitialize       10015eb0 f   MSVCRTD:ucrt_stubs.obj
- 0002:00004ec0       ___acrt_uninitialize_critical 10015ec0 f   MSVCRTD:ucrt_stubs.obj
+ 0002:00004eb0       ___vcrt_uninitialize       10015eb0 f   MSVCRTD:ucrt_stubs.obj
  0002:00004ec0       ___scrt_stub_for_acrt_uninitialize_critical 10015ec0 f   MSVCRTD:ucrt_stubs.obj
  0002:00004ec0       ___vcrt_uninitialize_critical 10015ec0 f   MSVCRTD:ucrt_stubs.obj
+ 0002:00004ec0       ___acrt_uninitialize_critical 10015ec0 f   MSVCRTD:ucrt_stubs.obj
  0002:00004ed0       ___scrt_stub_for_is_c_termination_complete 10015ed0 f   MSVCRTD:ucrt_stubs.obj
  0002:00004ed0       __is_c_termination_complete 10015ed0 f   MSVCRTD:ucrt_stubs.obj
  0002:00004ee0       __filter_x86_sse2_floating_point_exception 10015ee0 f   MSVCRTD:x86_exception_filter.obj
@@ -263,19 +263,20 @@
  0003:00000830       ??_C@_0BC@EOODALEL@Unknown?5exception@ 10019830     TransportDll.obj
  0003:00000848       ??_C@_0CC@BCKCCGII@WSAStartup?5failed?5with?5error?3?5?$CF@ 10019848     TransportDll.obj
  0003:00000870       ??_C@_05GDDNCJNM@27015@    10019870     TransportDll.obj
- 0003:00000878       ??_C@_0CD@PCLIBDOM@getaddrinfo?5failed?5with?5error?3?5@ 10019878     TransportDll.obj
- 0003:000008a4       ??_C@_0BO@LFGMIEOM@socket?5failed?5with?5error?3?5?$CFd?6@ 100198a4     TransportDll.obj
+ 0003:00000878       ??_C@_0CD@GNEMJLHK@Getaddrinfo?5failed?5with?5error?3?5@ 10019878     TransportDll.obj
+ 0003:000008a4       ??_C@_0BO@FELEPMOI@Socket?5failed?5with?5error?3?5?$CFd?6@ 100198a4     TransportDll.obj
  0003:000008c8       ??_C@_0BO@PHECJPPI@Unable?5to?5connect?5to?5server?$CB?6@ 100198c8     TransportDll.obj
- 0003:000008ec       ??_C@_0BM@JOEKAJND@send?5failed?5with?5error?3?5?$CFd?6@ 100198ec     TransportDll.obj
+ 0003:000008ec       ??_C@_0BM@KIPFKKHD@Send?5failed?5with?5error?3?5?$CFd?6@ 100198ec     TransportDll.obj
  0003:00000910       ??_C@_0BA@CAIPEDJE@Bytes?5Sent?3?5?$CFd?6@ 10019910     TransportDll.obj
- 0003:00000924       ??_C@_0CA@HCCMPOIB@shutdown?5failed?5with?5error?3?5?$CFd?6@ 10019924     TransportDll.obj
+ 0003:00000924       ??_C@_0CA@EIJOCDFD@Shutdown?5failed?5with?5error?3?5?$CFd?6@ 10019924     TransportDll.obj
  0003:0000094c       ??_C@_0BE@PLKHFJOE@Bytes?5received?3?5?$CFd?6@ 1001994c     TransportDll.obj
  0003:00000964       ??_C@_0BD@NNDEALAM@Connection?5closed?6@ 10019964     TransportDll.obj
- 0003:0000097c       ??_C@_0BM@MPCOOIAI@recv?5failed?5with?5error?3?5?$CFd?6@ 1001997c     TransportDll.obj
+ 0003:0000097c       ??_C@_0BP@FNOJJKPE@Receive?5failed?5with?5error?3?5?$CFd?6@ 1001997c     TransportDll.obj
  0003:000009a0       ??_C@_0N@JCPOJMFH@receive?5?$CFs?5?6@ 100199a0     TransportDll.obj
  0003:000009b4       ??_7type_info@@6B@         100199b4     MSVCRTD:std_type_info_static.obj
- 0003:000009bc       __pDefaultRawDllMain       100199bc     MSVCRTD:dll_dllmain.obj
  0003:000009bc       __pRawDllMain              100199bc     MSVCRTD:dll_dllmain.obj
+ 0003:000009bc       __pDefaultRawDllMain       100199bc     MSVCRTD:dll_dllmain.obj
+ 0003:00000a5c       ??_C@_0N@JDNOAMHC@Error?5occur?$CB@ 10019a5c     TransportDll.obj
  0003:00000a80       ??_C@_0NN@NGPKDKPD@The?5value?5of?5ESP?5was?5not?5proper@ 10019a80     MSVCRTD:error.obj
  0003:00000b90       ??_C@_0BBN@GPMLNJCF@A?5cast?5to?5a?5smaller?5data?5type?5h@ 10019b90     MSVCRTD:error.obj
  0003:00000ce8       ??_C@_0BN@FFOINMNJ@Stack?5memory?5was?5corrupted?6?$AN@ 10019ce8     MSVCRTD:error.obj
@@ -339,7 +340,7 @@
  0004:00000134       ??_R0?AVexception@std@@@8  1001c134     TransportDll.obj
  0004:00000158       ??_R0?AVtype_info@@@8      1001c158     MSVCRTD:std_type_info_static.obj
  0004:00000278       ___@@_PchSym_@00@UfhvihUpriroUwvhpglkUdrmhvierxvhUgzhpLCUgizmhkligwooUwvyftUhgwzucOlyq@4B2008FD98C1DD4 1001c278     stdafx.obj
- 0004:0000027c       ?server_ip@@3PADA          1001c27c     TransportDll.obj
+ 0004:0000027c       ?ServerIp@@3PADA           1001c27c     TransportDll.obj
  0004:00000298       ?_OptionsStorage@?1??__local_stdio_printf_options@@9@4_KA 1001c298     TransportDll.obj
  0004:00000678       ?__type_info_root_node@@3U__type_info_node@@A 1001c678     MSVCRTD:tncleanup.obj
  0004:00000688       ?_OptionsStorage@?1??__local_stdio_scanf_options@@9@4_KA 1001c688     MSVCRTD:default_local_stdio_options.obj
@@ -435,10 +436,63 @@
 
  Static symbols
 
+ 0000:fffe2000       __guard_fids___CRT_RTC_INIT 10000000     MSVCRTD:init.obj
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     kernel32:KERNEL32.dll
+ 0000:fffde000       .debug$S                   10000000     kernel32:KERNEL32.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     kernel32:KERNEL32.dll
+ 0000:fffde000       .debug$S                   10000000     kernel32:KERNEL32.dll
+ 0000:fffde000       .debug$S                   10000000     kernel32:KERNEL32.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ws2_32:WS2_32.dll
+ 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
+ 0000:fffde000       .debug$S                   10000000     kernel32:KERNEL32.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ws2_32:WS2_32.dll
+ 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
+ 0000:fffde000       .debug$S                   10000000     ws2_32:WS2_32.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
+ 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
+ 0000:fffe2000       __guard_fids___except_handler4 10000000     MSVCRTD:chandler4gs.obj
+ 0000:fffe2000       __guard_fids__             10000000     MSVCRTD:guard_support.obj
+ 0000:fffe2000       __guard_fids___guard_icall_checks_enforced 10000000     MSVCRTD:guard_support.obj
+ 0000:fffde000       .debug$S                   10000000     ws2_32:WS2_32.dll
+ 0000:fffe2000       __guard_fids_?dllmain_dispatch@@YAHQAUHINSTANCE__@@KQAX@Z 10000000     MSVCRTD:dll_dllmain.obj
+ 0000:fffe2000       __guard_fids__             10000000     MSVCRTD:std_type_info_static.obj
+ 0000:fffde000       .debug$S                   10000000     ws2_32:WS2_32.dll
+ 0000:fffde000       .debug$S                   10000000     ws2_32:WS2_32.dll
+ 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
+ 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
+ 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
+ 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
+ 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
+ 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
+ 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
  0000:fffde000       .debug$S                   10000000     kernel32:KERNEL32.dll
  0000:fffe2000       __guard_fids____scrt_set_unhandled_exception_filter 10000000     MSVCRTD:utility_desktop.obj
  0000:fffde000       .debug$S                   10000000     ws2_32:WS2_32.dll
- 0000:fffe2000       __guard_fids___CRT_RTC_INIT 10000000     MSVCRTD:init.obj
+ 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
  0000:fffe2000       __guard_fids___CRT_RTC_INITW 10000000     MSVCRTD:init.obj
  0000:fffde000       .debug$S                   10000000     ws2_32:WS2_32.dll
  0000:fffde000       .debug$S                   10000000     ws2_32:WS2_32.dll
@@ -461,75 +515,22 @@
  0000:fffde000       .debug$S                   10000000     kernel32:KERNEL32.dll
  0000:fffde000       .debug$S                   10000000     kernel32:KERNEL32.dll
  0000:fffde000       .debug$S                   10000000     kernel32:KERNEL32.dll
- 0000:fffde000       .debug$S                   10000000     kernel32:KERNEL32.dll
- 0000:fffde000       .debug$S                   10000000     kernel32:KERNEL32.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     kernel32:KERNEL32.dll
- 0000:fffde000       .debug$S                   10000000     kernel32:KERNEL32.dll
- 0000:fffde000       .debug$S                   10000000     kernel32:KERNEL32.dll
- 0000:fffde000       .debug$S                   10000000     kernel32:KERNEL32.dll
- 0000:fffde000       .debug$S                   10000000     ws2_32:WS2_32.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ws2_32:WS2_32.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ucrtd:ucrtbased.dll
- 0000:fffde000       .debug$S                   10000000     ws2_32:WS2_32.dll
- 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
- 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
- 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
- 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
- 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
- 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
- 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
- 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
- 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
- 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
- 0000:fffde000       .debug$S                   10000000     vcruntimed:VCRUNTIME140D.dll
- 0000:fffde000       .debug$S                   10000000     ws2_32:WS2_32.dll
- 0000:fffde000       .debug$S                   10000000     ws2_32:WS2_32.dll
- 0000:fffe2000       __guard_fids__             10000000     MSVCRTD:std_type_info_static.obj
- 0000:fffe2000       __guard_fids_?dllmain_dispatch@@YAHQAUHINSTANCE__@@KQAX@Z 10000000     MSVCRTD:dll_dllmain.obj
- 0000:fffde000       .debug$S                   10000000     ws2_32:WS2_32.dll
- 0000:fffe2000       __guard_fids___guard_icall_checks_enforced 10000000     MSVCRTD:guard_support.obj
- 0000:fffe2000       __guard_fids__             10000000     MSVCRTD:guard_support.obj
- 0000:fffe2000       __guard_fids___except_handler4 10000000     MSVCRTD:chandler4gs.obj
  0002:00000a34       $LN6                       10011a34     TransportDll.obj
  0002:00000a3c       $LN5                       10011a3c     TransportDll.obj
  0002:00000a48       $LN3                       10011a48     TransportDll.obj
- 0002:00000f99       __catch$?GetCopyRight@TransportDll@@QAEPBDPAU_GUID@@@Z$0 10011f99 f   TransportDll.obj
- 0002:00001008       $LN23                      10012008     TransportDll.obj
- 0002:00001010       $LN22                      10012010     TransportDll.obj
- 0002:00001034       $LN20                      10012034     TransportDll.obj
- 0002:00001036       $LN19                      10012036     TransportDll.obj
- 0002:0000103e       $LN18                      1001203e     TransportDll.obj
+ 0002:00000f79       __catch$?GetCopyRight@TransportDll@@QAEPBDPAU_GUID@@@Z$0 10011f79 f   TransportDll.obj
+ 0002:00001010       $LN23                      10012010     TransportDll.obj
+ 0002:00001018       $LN22                      10012018     TransportDll.obj
+ 0002:0000103c       $LN20                      1001203c     TransportDll.obj
+ 0002:0000103e       $LN19                      1001203e     TransportDll.obj
+ 0002:00001046       $LN18                      10012046     TransportDll.obj
  0002:00001379       __catch$?Initialize@TransportDll@@QAEXPAD@Z$0 10012379 f   TransportDll.obj
- 0002:000013fc       $LN20                      100123fc     TransportDll.obj
- 0002:00001404       $LN19                      10012404     TransportDll.obj
- 0002:00001410       $LN17                      10012410     TransportDll.obj
- 0002:00001674       $LN5                       10012674     TransportDll.obj
- 0002:0000167c       $LN4                       1001267c     TransportDll.obj
- 0002:00001688       $LN3                       10012688     TransportDll.obj
+ 0002:00001410       $LN20                      10012410     TransportDll.obj
+ 0002:00001418       $LN19                      10012418     TransportDll.obj
+ 0002:00001424       $LN17                      10012424     TransportDll.obj
+ 0002:0000165c       $LN5                       1001265c     TransportDll.obj
+ 0002:00001664       $LN4                       10012664     TransportDll.obj
+ 0002:00001670       $LN3                       10012670     TransportDll.obj
  0002:00001cc0       ?dllmain_crt_dispatch@@YGHQAUHINSTANCE__@@KQAX@Z 10012cc0 f   MSVCRTD:dll_dllmain.obj
  0002:00001d2c       $LN11                      10012d2c     MSVCRTD:dll_dllmain.obj
  0002:00001d60       ?dllmain_crt_process_attach@@YAHQAUHINSTANCE__@@QAX@Z 10012d60 f   MSVCRTD:dll_dllmain.obj

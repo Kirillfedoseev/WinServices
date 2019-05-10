@@ -1,4 +1,2 @@
 ﻿  TransportDll.cpp
-  C:\Users\kiril\Desktop\WinServices\Task 2\TransportDll\TransportDll.cpp(143) : warning C4715: TransportDll::GetCopyRight: значение возвращается не при всех путях выполнения
-     Создается библиотека C:\Users\kiril\Desktop\WinServices\Task 2\Debug\TransportDll.lib и объект C:\Users\kiril\Desktop\WinServices\Task 2\Debug\TransportDll.exp
   TransportDll.vcxproj -> C:\Users\kiril\Desktop\WinServices\Task 2\Debug\TransportDll.dll

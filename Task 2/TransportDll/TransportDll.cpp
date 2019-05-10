@@ -5,13 +5,13 @@
 
 
 
-char server_ip[MAX_CHARS_FOR_IP];
+char ServerIp[MAX_CHARS_FOR_IP];
 
 extern "C" __declspec(dllexport) bool __cdecl SetServerEndpoint(char* ip)
 {
 	const auto len = strlen(ip) + 1; //including null-terminated character
 	if (len > MAX_CHARS_FOR_IP) return false;
-	memcpy(server_ip, ip, len);
+	memcpy(ServerIp, ip, len);
 	return true;
 }
 
@@ -19,17 +19,16 @@ extern "C" __declspec(dllexport) bool __cdecl SetServerEndpoint(char* ip)
 extern "C" __declspec(dllexport) const char* __cdecl GetCopyright(GUID pluginId)
 {
 	TransportDll transport = TransportDll();
-	transport.Initialize(server_ip);
-	const char* text = transport.GetCopyRight(&pluginId);
-	transport.CleanUp();
-	return text;
+	transport.Initialize(ServerIp);
+	return transport.GetCopyRight(&pluginId);
 }
+
 
 TransportDll::TransportDll()
 {
-	ConnectSocket = INVALID_SOCKET;
+	connectSocket = INVALID_SOCKET;
 	result = NULL;
-	recvbuflen = BUFFER_LENGHT;
+	receiveBufLen = BUFFER_LENGHT;
 
 	ZeroMemory(&hints, sizeof(hints));
 	hints.ai_family = AF_UNSPEC;
@@ -38,7 +37,7 @@ TransportDll::TransportDll()
 }
 
 
-void TransportDll::Initialize(char* server_ip)
+void TransportDll::Initialize(char* serverIp)
 {
 
 	try
@@ -49,31 +48,30 @@ void TransportDll::Initialize(char* server_ip)
 
 
 		// Resolve the server address and port
-		iResult = getaddrinfo(server_ip, DEFAULT_PORT, &hints, &result);
+		iResult = getaddrinfo(serverIp, DEFAULT_PORT, &hints, &result);
 		if (iResult != 0)
-			throw std::exception("getaddrinfo failed with error: %d\n", iResult);
-
+			throw std::exception("Getaddrinfo failed with error: %d\n", iResult);
 
 
 		// Attempt to connect to an address until one succeeds
 		for (struct addrinfo* ptr = result; ptr != nullptr; ptr = ptr->ai_next) {
 
 			// Create a SOCKET for connecting to server
-			ConnectSocket = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
-			if (ConnectSocket == INVALID_SOCKET)
-				throw std::exception("socket failed with error: %d\n", WSAGetLastError());
+			connectSocket = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
+			if (connectSocket == INVALID_SOCKET)
+				throw std::exception("Socket failed with error: %d\n", WSAGetLastError());
 
 
 			// Connect to server.
-			iResult = connect(ConnectSocket, ptr->ai_addr, (int)ptr->ai_addrlen);
+			iResult = connect(connectSocket, ptr->ai_addr, (int)ptr->ai_addrlen);
 			if (iResult != SOCKET_ERROR) break;
 
-			closesocket(ConnectSocket);
-			ConnectSocket = INVALID_SOCKET;
+			closesocket(connectSocket);
+			connectSocket = INVALID_SOCKET;
 
 		}
 
-		if (ConnectSocket == INVALID_SOCKET)
+		if (connectSocket == INVALID_SOCKET)
 			throw std::exception("Unable to connect to server!\n");
 
 		freeaddrinfo(result);
@@ -85,66 +83,69 @@ void TransportDll::Initialize(char* server_ip)
 	{
 		CleanUp();
 		freeaddrinfo(result);
+		printf(e.what());
 	}
 }
 
 
-const char* TransportDll::GetCopyRight(GUID* plugin_id)
+const char* TransportDll::GetCopyRight(GUID* pluginId)
 {
-	char sendbuf[sizeof(GUID)];
-	char recvbuf[BUFFER_LENGHT];
+	char sendBuf[sizeof(GUID)];
+	char recvBuf[BUFFER_LENGHT];
 
-	memcpy(sendbuf, plugin_id, sizeof(sendbuf));
+	memcpy(sendBuf, pluginId, sizeof(sendBuf));
 
 	try
 	{
 		// Send an initial buffer
-		iResult = send(ConnectSocket, (const char*)& sendbuf, (int)sizeof(sendbuf), 0);
+		iResult = send(connectSocket, (const char*)& sendBuf, (int) sizeof(sendBuf), 0);
 		if (iResult == SOCKET_ERROR)
-			throw std::exception("send failed with error: %d\n", WSAGetLastError());
+			throw std::exception("Send failed with error: %d\n", WSAGetLastError());
 
 		printf("Bytes Sent: %d\n", iResult);
 
 		// shutdown the connection since no more data will be sent
-		iResult = shutdown(ConnectSocket, SD_SEND);
+		iResult = shutdown(connectSocket, SD_SEND);
 		if (iResult == SOCKET_ERROR)
-			throw std::exception("shutdown failed with error: %d\n", WSAGetLastError());
+			throw std::exception("Shutdown failed with error: %d\n", WSAGetLastError());
 
 
 		// Receive until the peer closes the connection
 		do {
 
-			iResult = recv(ConnectSocket, (char*)& recvbuf, recvbuflen, 0);
+			iResult = recv(connectSocket, (char*)& recvBuf, receiveBufLen, 0);
 			if (iResult > 0)
 				printf("Bytes received: %d\n", iResult);
 			else if (iResult == 0)
 				printf("Connection closed\n");
 			else
-				throw std::exception("recv failed with error: %d\n", WSAGetLastError());
+				throw std::exception("Receive failed with error: %d\n", WSAGetLastError());
 
 		} while (iResult > 0);
 
-		printf("receive %s \n", recvbuf);
+		printf("receive %s \n", recvBuf);
 
 		// cleanup
-		closesocket(ConnectSocket);
-		WSACleanup();
+		CleanUp();
 
-		const auto len = strlen(recvbuf) + 1;
-		const auto ret = (char*)malloc(len);
-		memcpy(ret, recvbuf, len);
+		const auto len = strlen(recvBuf) + 1;
+		const auto ret = (char*) malloc(len);
+		memcpy(ret, recvBuf, len);
 		return ret;
 
 	}
 	catch (std::exception e)
 	{
 		CleanUp();
+		printf(e.what());
+		return "Error occur!";
 	}
 }
 
+
 void TransportDll::CleanUp()
 {
-	closesocket(ConnectSocket);
+	closesocket(connectSocket);
 	WSACleanup();
 }
 

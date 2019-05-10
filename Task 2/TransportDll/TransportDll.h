@@ -11,17 +11,17 @@
 class TransportDll
 {
 	WSADATA wsaData;
-	SOCKET ConnectSocket;
+	SOCKET connectSocket;
 	struct addrinfo* result, hints;
 	int iResult;
-	int recvbuflen;
+	int receiveBufLen;
 
 
-
+	void CleanUp();
 public:
 	TransportDll();
-	void Initialize(char* server_ip);
-	const char* GetCopyRight(GUID* plugin_id);
-	void CleanUp();
+	void Initialize(char* serverIp);
+	const char* GetCopyRight(GUID* pluginId);
+	
 
 };
