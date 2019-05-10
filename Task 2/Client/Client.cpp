@@ -6,6 +6,8 @@
 #include "..\api.h"
 #include "..\plugin_id.h"
 
+#define MAX_CHARS_FOR_GUID 50
+
 int main(int argc, char* argv[])
 {
 	printf("Hello, world! (%s) \n", argv[0]);
@@ -15,15 +17,7 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-#if 0
-	//simple test to check GUID string representation
-	wchar_t* string;
-	StringFromIID(plugin1_id, &string);
-	printf("GUID is %S \n", string);
-	//{00000000-0000-0000-0100-000000000000}
-#endif
-
-	#define MAX_CHARS_FOR_GUID 50
+	
 	wchar_t guidString[MAX_CHARS_FOR_GUID];
 	IID guid;
 
@@ -47,4 +41,6 @@ int main(int argc, char* argv[])
 	printf("Copyright = %s \n", GetCopyright(guid));
 	return 0;
 }
+
+
 
