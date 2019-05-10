@@ -212,13 +212,15 @@ Return Value:
 
         // assign index of default counter (Sine Wave)
         SigGenDataDefinition.SigGenObjectType.DefaultCounter         = 0;
-        SigGenDataDefinition.SineWaveDef.CounterNameTitleIndex      += dwFirstCounter;
+        
+    	SigGenDataDefinition.SineWaveDef.CounterNameTitleIndex      += dwFirstCounter;
         SigGenDataDefinition.SineWaveDef.CounterHelpTitleIndex      += dwFirstHelp;
         SigGenDataDefinition.TriangleWaveDef.CounterNameTitleIndex  += dwFirstCounter;
         SigGenDataDefinition.TriangleWaveDef.CounterHelpTitleIndex  += dwFirstHelp;
         SigGenDataDefinition.SquareWaveDef.CounterNameTitleIndex    += dwFirstCounter;
         SigGenDataDefinition.SquareWaveDef.CounterHelpTitleIndex    += dwFirstHelp;
-        SigGenDataDefinition.ConstantValueDef.CounterNameTitleIndex += dwFirstCounter;
+        
+    	SigGenDataDefinition.ConstantValueDef.CounterNameTitleIndex += dwFirstCounter;
         SigGenDataDefinition.ConstantValueDef.CounterHelpTitleIndex += dwFirstHelp;
 
         bInitOK = TRUE; // ok to use this function
